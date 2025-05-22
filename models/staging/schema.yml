@@ -35,7 +35,7 @@ models:
         tests:
           - not_null
           - relationships:
-              field: customerid
+              field: customer_id
               to: ref('stg_customers')
       - name: sales_date
         description: "the date of the sales order"
@@ -73,7 +73,7 @@ models:
         description: "part of the primary key for the sales orders' details"
         tests:
           - not_null
-      - name: productid
+      - name: product_id
         description: "the id of the product"
         tests:
           - not_null
