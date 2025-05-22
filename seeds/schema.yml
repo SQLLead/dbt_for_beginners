@@ -1,0 +1,25 @@
+version: 2
+
+seeds:
+  - name: sales_regions
+    description: A manual map of zip codes to sales regions.
+    columns:
+      - name: Sales_Region_Zip_Begin
+        tests:
+          - unique
+          - not_null
+      - name: Sales_Region_Zip_End
+        tests:
+          - unique
+          - not_null
+      - name: Sales_Region
+        tests: 
+          - unique
+          - not_null
+          # The "relationships" built-in test can't be used on zip code range; instead, we need a custom test in order 
+          # to confirm all zip codes have a sales region.
+#          - relationships:
+#              field: <FOREIGN_KEY_COLUMN>
+#              to: ref('stg_customers')
+
+                
