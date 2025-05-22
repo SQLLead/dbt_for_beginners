@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: dim_customers
-    description: "the customers dimension"
+    description: "the customer dimension"
     columns:
       - name: customer_id
         description: "the primary key for the customers"
@@ -34,4 +34,86 @@ models:
         tests:
           - not_null
 
-    
+  - name: dim_sales_order_headers
+    description: "the sales order header dimension"
+    columns:
+      - name: sales_order_id
+        description: "the primary key for the sales order header"
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: "the foreign key to the customers"
+        tests:
+          - not_null
+      - name: sales_amount
+        description: "the total net sales amount for the entire sales order"
+        tests:
+          - not_null
+      - name: sales_date
+        description: "the date of the sales order"
+        tests:
+          - not_null
+      - name: shipping_amount
+        description: "the total shipping amount for the sales order"
+        tests:
+          - not_null
+      - name: tax_amount
+        description: "the total tax amount for the sales order"
+        tests:
+          - not_null
+          - unique
+      - name: total_amount
+        description: "the grand total for the entire sales order"
+
+  - name: dim_sales_order_details
+    description: "the sales order detail dimension"
+    columns:
+      - name: sales_order_id
+        description: "the primary key of the sales order"
+        tests:
+          - not_null
+      - name: customer_id
+        description: "the foreign key to the customers"
+        tests:
+          - not_null
+      - name: sales_date
+        description: "the date of the sales order"
+        tests:
+          - not_null
+      - name: sales_amount
+        description: "the net sales amount of the sales order"
+        tests:
+          - not_null
+      - name: shipping_amount
+        description: "the total shipping amount of the sales order"
+        tests:
+          - not_null
+      - name: tax_amount
+        description: "the total tax amount of the sales order"
+        tests:
+          - not_null
+      - name: total_amount
+        description: "the grand total amount of the sales order"
+        tests:
+          - not_null
+
+  - name: dim_sales_regions
+    description: "the sales regions"
+    columns:
+      - name: sales_region_zip_begin
+        description: "the lowest value in the region zip code range"
+        tests:
+          - not_null
+          - unique
+      - name: sales_region_zip_end
+        description: "the highest value in the region zip code range"
+        tests:
+          - not_null
+          - unique
+      - name: sales_region
+        description: "the name of the sales region"
+        tests:
+          - not_null
+          - unique
+

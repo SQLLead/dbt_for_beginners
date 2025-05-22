@@ -11,7 +11,6 @@ renamed as (
         salesorderid as sales_order_id,
         customerid as customer_id,
         salesdate as sales_date,
-        salesamount,
         to_decimal(replace(replace(salesamount, ',', ''), '$', ''), 12, 2) as sales_amount,
         to_decimal(replace(replace(taxamount, ',', ''), '$', ''), 12, 2) as tax_amount,
         to_decimal(replace(replace(shippingamount, ',', ''), '$', ''), 12, 2) as shipping_amount,

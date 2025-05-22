@@ -25,46 +25,51 @@ models:
   - name: stg_sales_order_headers
     description: "staging table for the sales order headers"
     columns:
-      - name: salesorderid
+      - name: sales_order_id
         description: "the primary key for the sales order headers"
         tests:
           - not_null
           - unique
-      - name: customerid
+      - name: customer_id
         description: "the foreign key for the customers table"
         tests:
           - not_null
           - relationships:
               field: customerid
               to: ref('stg_customers')
-      - name: salesdate
+      - name: sales_date
         description: "the date of the sales order"
         tests:
           - not_null
-      - name: salesamount
+      - name: sales_amount
         description: "the net amount of the sales order before tax and shipping"
         tests:
           - not_null
-      - name: taxamount 
+      - name: tax_amount 
         description: "the tax on the sales order net sales amount"
         tests:
           - not_null
-      - name: shippingamount
+      - name: shipping_amount
         description: "the shipping charge on the entire sales order"
         tests:
+          - not_null
+      - name: total_amount
+        description: "The grand total of all charges"
+        tests:
+          - unique
           - not_null
 
   - name: stg_sales_order_details
     description: "staging table for the sales orders' details"
     columns:
-      - name: salesorderid
+      - name: sales_order_id
         description: "part of the primary key for the sales orders' details"
         tests:
           - not_null
           - relationships:
               field: salesorderid
               to: ref('stg_sales_orders')
-      - name: salesorderdetailid
+      - name: sales_order_detail_id
         description: "part of the primary key for the sales orders' details"
         tests:
           - not_null
@@ -72,48 +77,48 @@ models:
         description: "the id of the product"
         tests:
           - not_null
-      - name: productprice
+      - name: product_price
         description: "the price of the individual projet"
         tests:
           - not_null
-      - name: orderquantity
+      - name: order_quantity
         description: "the quantity of the product ordered"
         tests:
           - not_null
-      - name: totalprice
+      - name: total_price
         description: "the product of the product price and product quantity ordered"
 
   - name: stg_customers
     description: "staging table for the customers data"
     columns:
-      - name: customerid
+      - name: customer_id
         description: "the primary key for the customers data"
         tests:
           - not_null
           - unique
-      - name: customername
+      - name: customer_name
         description: "the customer full name"
         tests:
           - not_null
-      - name: customeraddress
+      - name: customer_address
         description: "the order address for the customer"
         tests:
           - not_null
-      - name: customercity
+      - name: customer_city
         description: "the order city for the customer"
         tests:
           - not_null
-      - name: customerstate
+      - name: customer_state
         description: "the order state (location) for the customer"
         tests:
           - not_null
-      - name: customerzip
+      - name: customer_zip
         description: "the order zip code for the customer, used for determining the sales region"
         tests:
           - not_null
           # we need a way to test for valid zip codes.  this will need to be a macro/function call, and we need to provide the number of acceptable failures.
           # this will make a great example for the demo of error handling.
-      - name: customerphone
+      - name: customer_phone
         description: "the phone number for the customer"
         tests:
           - not_null
