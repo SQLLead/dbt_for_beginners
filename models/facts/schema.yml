@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: fct_sales_orders.sql
+    description: "the sales order fact table"
+    columns:
+      - name: sales_order_id
+        description: "part of the primary key for sales order details"
+        tests:
+          - not_null
+      - name: sales_order_detail_id
+        description: "part of the primary key for sales order details"
+        tests:
+          - not_null
+      - name: customer_name
+        description: "the name of the customer that placed the sales order"
+        tests:
+          - not_null
+      - name: product_id
+        description: "the product that was ordered"
+        tests:
+          - not_null
+      - name: product_price
+        description: "the price of the product ordered"
+        tests:
+          - not_null
+      - name: order_quantity
+        description: "the number of products ordered"
+        tests:
+          - not_null
+      - name: sales_region
+        description: "the sales region of the customer that placed the order"
+        tests:
+          - not_null
+      - name: sales_amount
+        description: "the net sales amount of the product ordered"
+        tests:
+          - not_null
+      - name: sales_date
+        description: "the date the order was placed"
+        tests:
+          - not_null
+      - name: shipping_amount
+        description: "the total shipping price for the order"
+        tests:
+          - not_null
+      - name: tax_amount
+        description: "the total tax price for the order"
+        tests:
+          - not_null
+      - name: total_amount
+        description: "the grand total price for the order"
+        tests:
+          - not_null

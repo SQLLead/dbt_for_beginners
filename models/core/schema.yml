@@ -70,31 +70,27 @@ models:
     description: "the sales order detail dimension"
     columns:
       - name: sales_order_id
-        description: "the primary key of the sales order"
+        description: "part of the primary key of the sales order"
         tests:
           - not_null
-      - name: customer_id
-        description: "the foreign key to the customers"
+      - name: sales_order_detail_id
+        description: "part of the primary key of the sales order"
         tests:
           - not_null
-      - name: sales_date
-        description: "the date of the sales order"
+      - name: product_id
+        description: "the product id of the sales order line"
         tests:
           - not_null
-      - name: sales_amount
-        description: "the net sales amount of the sales order"
+      - name: product_price
+        description: "the price of the product of the sales order line"
         tests:
           - not_null
-      - name: shipping_amount
-        description: "the total shipping amount of the sales order"
+      - name: order_quantity
+        description: "the quantity of the individual product ordered"
         tests:
           - not_null
-      - name: tax_amount
-        description: "the total tax amount of the sales order"
-        tests:
-          - not_null
-      - name: total_amount
-        description: "the grand total amount of the sales order"
+      - name: total_price
+        description: "the calculated result of the quantity of product prices"
         tests:
           - not_null
 
