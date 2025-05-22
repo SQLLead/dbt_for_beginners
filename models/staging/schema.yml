@@ -61,14 +61,24 @@ models:
 
   - name: stg_sales_order_details
     description: "staging table for the sales orders' details"
+    
+    # model-level tests:
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:  
+            - sales_order_id
+            - sales_order_detail_id
+
+    # column-level tests:
     columns:
       - name: sales_order_id
         description: "part of the primary key for the sales orders' details"
         tests:
           - not_null
           - relationships:
-              field: salesorderid
+              field: sales_order_id
               to: ref('stg_sales_orders')
+
       - name: sales_order_detail_id
         description: "part of the primary key for the sales orders' details"
         tests:
