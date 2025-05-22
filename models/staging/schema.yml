@@ -1,0 +1,216 @@
+version: 2
+
+models:
+  - name: stg_sales_regions
+    description: "staging table for the sales regions seed file"
+    columns:
+      - name: sales_region_zip_begin
+        description: "the lowest zip code in the sales region"
+        tests:
+          - not_null
+          - unique
+
+      - name: sales_region_zip_end
+        description: "the highest zip code in the sales region"
+        tests:
+          - not_null
+          - unique
+      
+      - name: sales_region
+        description: "the name of the sales region"
+        tests: 
+          - not_null
+          - unique
+
+  - name: stg_sales_order_headers
+    description: "staging table for the sales order headers"
+    columns:
+      - name: salesorderid
+        description: "the primary key for the sales order headers"
+        tests:
+          - not_null
+          - unique
+      - name: customerid
+        description: "the foreign key for the customers table"
+        tests:
+          - not_null
+          - relationships:
+              field: customerid
+              to: ref('stg_customers')
+      - name: salesdate
+        description: "the date of the sales order"
+        tests:
+          - not_null
+      - name: salesamount
+        description: "the net amount of the sales order before tax and shipping"
+        tests:
+          - not_null
+      - name: taxamount 
+        description: "the tax on the sales order net sales amount"
+        tests:
+          - not_null
+      - name: shippingamount
+        description: "the shipping charge on the entire sales order"
+        tests:
+          - not_null
+
+  - name: stg_sales_order_details
+    description: "staging table for the sales orders' details"
+    columns:
+      - name: salesorderid
+        description: "part of the primary key for the sales orders' details"
+        tests:
+          - not_null
+          - relationships:
+              field: salesorderid
+              to: ref('stg_sales_orders')
+      - name: salesorderdetailid
+        description: "part of the primary key for the sales orders' details"
+        tests:
+          - not_null
+      - name: productid
+        description: "the id of the product"
+        tests:
+          - not_null
+      - name: productprice
+        description: "the price of the individual projet"
+        tests:
+          - not_null
+      - name: orderquantity
+        description: "the quantity of the product ordered"
+        tests:
+          - not_null
+      - name: totalprice
+        description: "the product of the product price and product quantity ordered"
+
+  - name: stg_customers
+    description: "staging table for the customers data"
+    columns:
+      - name: customerid
+        description: "the primary key for the customers data"
+        tests:
+          - not_null
+          - unique
+      - name: customername
+        description: "the customer full name"
+        tests:
+          - not_null
+      - name: customeraddress
+        description: "the order address for the customer"
+        tests:
+          - not_null
+      - name: customercity
+        description: "the order city for the customer"
+        tests:
+          - not_null
+      - name: customerstate
+        description: "the order state (location) for the customer"
+        tests:
+          - not_null
+      - name: customerzip
+        description: "the order zip code for the customer, used for determining the sales region"
+        tests:
+          - not_null
+          # we need a way to test for valid zip codes.  this will need to be a macro/function call, and we need to provide the number of acceptable failures.
+          # this will make a great example for the demo of error handling.
+      - name: customerphone
+        description: "the phone number for the customer"
+        tests:
+          - not_null
+      
+sources:
+  - name: snowflake_sources
+    database: dbt_for_beginners
+    schema: source
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    tables:
+      - name: customers
+        description: "raw customer data from snowflake"
+        columns: 
+          - name: customerid
+            description: "primary key for the customers source"
+            tests:
+              - not_null
+              - unique
+          - name: customername
+            description: "customer's full name"
+            tests:
+              - not_null
+          - name: customeraddress
+            description: "address of the customer"
+            tests:
+              - not_null
+          - name: customercity
+            description: "customer's city"
+            tests:
+              - not_null
+          - name: customerstate
+            description: "customer's state"
+            tests:
+              - not_null
+          - name: customerzip
+            description: "customer's zip code"
+            tests:
+              - not_null
+          - name: customerphone
+            description: "customer's phone number"
+            tests:
+              - not_null
+      - name: sales_order_details
+        description: "raw sales order detail data from snowflake"
+        columns:
+          - name: salesorderid
+            description: "part of the primary key of the sales order headers"
+            tests:
+              - not_null
+          - name: salesorderdetailid
+            description: "part of the primary key of the sales order headers"
+            tests:
+              - not_null
+          - name: productid
+            description: "the foreign key identifier for the product ordered"
+            tests:
+              - not_null
+          - name: productprice
+            description: "the price of an individual product ordered"
+            tests:
+              - not_null
+          - name: orderquantity
+            description: "the number of products ordered"
+            tests:
+              - not_null
+          - name: totalprice
+            description: "the net price after the quantity is considered"
+            tests:
+              - not_null
+      - name: sales_order_headers
+        description: "raw sales order headers from snowflake"
+        columns:
+          - name: salesorderid
+            description: "the primary key for the sales order headers"
+            tests:
+              - not_null
+              - unique
+          - name: customerid
+            description: "the foreign key identifier to the customers data"
+            tests:
+              - not_null
+          - name: salesdate
+            description: "the date of the sales order"
+            tests:
+              - not_null
+          - name: salesamount
+            description: "the net total sales amount before tax and shipping"
+            tests:
+              - not_null
+          - name: taxamount
+            description: "the tax amount on the total sales amount"
+            tests:
+              - not_null
+          - name: shippingamount
+            description: "the total shipping charge for the sales order"
+            tests:
+              - not_null

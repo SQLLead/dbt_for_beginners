@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "the customers dimension"
+    columns:
+      - name: customer_id
+        description: "the primary key for the customers"
+        tests:
+          - not_null
+          - unique
+      - name: customer_address
+        description: "the address for the customer"
+        tests:
+          - not_null
+      - name: customer_city
+        description: "the city for the customer"
+        tests:
+          - not_null
+      - name: customer_state
+        description: "the state for the customer"
+        tests:
+          - not_null
+      - name: customer_zip
+        description: "the zip code for the customer"
+        tests:
+          - not_null
+      - name: customer_region
+        description: "the sales region for the customer"
+        tests:
+          - not_null
+      - name: customer_phone
+        description: "the telephone number for the customer"
+        tests:
+          - not_null
+
+    
