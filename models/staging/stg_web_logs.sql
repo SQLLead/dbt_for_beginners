@@ -13,3 +13,5 @@ from (
     union all
     select * from {{ ref('web_logs_day3') }}
 ) as unioned_logs
+
+
