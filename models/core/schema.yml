@@ -25,6 +25,10 @@ models:
         description: "the zip code for the customer"
         tests:
           - not_null
+          - test_zip_code_validity:
+              column_name: customer_zip
+              min_zip: 90000
+              max_zip: 99999
       - name: customer_region
         description: "the sales region for the customer"
         tests:
@@ -112,4 +116,3 @@ models:
         tests:
           - not_null
           - unique
-

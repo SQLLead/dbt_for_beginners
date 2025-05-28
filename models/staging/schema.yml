@@ -15,10 +15,10 @@ models:
         tests:
           - not_null
           - unique
-      
+
       - name: sales_region
         description: "the name of the sales region"
-        tests: 
+        tests:
           - not_null
           - unique
 
@@ -45,7 +45,7 @@ models:
         description: "the net amount of the sales order before tax and shipping"
         tests:
           - not_null
-      - name: tax_amount 
+      - name: tax_amount
         description: "the tax on the sales order net sales amount"
         tests:
           - not_null
@@ -61,11 +61,11 @@ models:
 
   - name: stg_sales_order_details
     description: "staging table for the sales orders' details"
-    
+
     # model-level tests:
     tests:
       - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:  
+          combination_of_columns:
             - sales_order_id
             - sales_order_detail_id
 
@@ -122,18 +122,21 @@ models:
         description: "the order state (location) for the customer"
         tests:
           - not_null
+
       - name: customer_zip
         description: "the order zip code for the customer, used for determining the sales region"
         tests:
           - not_null
-          # we need a way to test for valid zip codes.  this will need to be a macro/function call, and we need to provide the number of acceptable failures.
-          # this will make a great example for the demo of error handling.
-          - test_zip_code_validity
+          - test_zip_code_validity:
+              column_name: customer_zip
+              min_zip: 90000
+              max_zip: 99999
+
       - name: customer_phone
         description: "the phone number for the customer"
         tests:
           - not_null
-      
+
 sources:
   - name: snowflake_sources
     database: dbt_for_beginners
@@ -145,7 +148,7 @@ sources:
     tables:
       - name: customers
         description: "raw customer data from snowflake"
-        columns: 
+        columns:
           - name: customerid
             description: "primary key for the customers source"
             tests:
