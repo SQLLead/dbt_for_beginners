@@ -128,6 +128,7 @@ models:
           - not_null
           # we need a way to test for valid zip codes.  this will need to be a macro/function call, and we need to provide the number of acceptable failures.
           # this will make a great example for the demo of error handling.
+          - test_zip_code_validity
       - name: customer_phone
         description: "the phone number for the customer"
         tests:

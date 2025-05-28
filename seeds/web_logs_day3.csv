@@ -1,0 +1,5 @@
+user_id,page,event_type,event_timestamp
+106,/home,page_view,2024-06-03 10:00:00
+107,/about,page_view,2024-06-03 10:02:45
+101,/checkout,click,2024-06-03 10:05:22
+108,/products,click,2024-06-03 10:07:00
