@@ -1,3 +1,5 @@
-select * 
-from {{ ref('dim_customers') }}
-where customer_zip not between 90000 and 99999
+{% test test_zip_code_validity(model, column_name, min_zip=90000, max_zip=99999) %}
+  SELECT *
+  FROM {{ model }}
+  WHERE {{ column_name }} NOT BETWEEN {{ min_zip }} AND {{ max_zip }}
+{% endtest %}
