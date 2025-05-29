@@ -122,6 +122,7 @@ models:
         description: "the order state (location) for the customer"
         tests:
           - not_null
+#          - unique
 
       - name: customer_zip
         description: "the order zip code for the customer, used for determining the sales region"

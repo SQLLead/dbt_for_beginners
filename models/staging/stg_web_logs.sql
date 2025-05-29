@@ -8,10 +8,10 @@ select
     cast(event_timestamp as timestamp) as event_timestamp
 from (
     select * from {{ ref('web_logs_day1') }}
-    union all
-    select * from {{ ref('web_logs_day2') }}
-    union all
-    select * from {{ ref('web_logs_day3') }}
+ --   union all 
+ --   select * from {{ ref('web_logs_day2') }}
+ --   union all
+ --   select * from {{ ref('web_logs_day3') }} 
 ) as unioned_logs
 
 
